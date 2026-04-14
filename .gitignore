@@ -1,0 +1,144 @@
+############################
+# General
+############################
+**/.DS_Store
+**/Thumbs.db
+**/*.log
+**/*.tmp
+**/*.swp
+**/*.swo
+**/*.bak
+**/*.orig
+
+############################
+# IDEs / Editors
+############################
+**/.idea/
+**/.vscode/
+**/*.iml
+**/*.ipr
+**/*.iws
+
+############################
+# Kotlin / Java / Gradle
+############################
+**/.gradle/
+**/build/
+**/out/
+!**/gradle/wrapper/gradle-wrapper.jar
+
+**/*.class
+**/*.jar
+**/*.war
+**/*.ear
+
+############################
+# Android
+############################
+**/local.properties
+**/captures/
+**/.externalNativeBuild/
+**/.cxx/
+
+############################
+# Flutter
+############################
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/build/
+**/.dart_tool/
+**/ios/Pods/
+**/ios/.symlinks/
+**/android/.gradle/
+**/android/app/build/
+**/android/local.properties
+**/generated_plugin_registrant.dart
+
+############################
+# React / Node
+############################
+**/node_modules/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+**/dist/
+**/build/
+**/.next/
+**/out/
+
+**/.env
+**/.env.*
+!**/.env.example
+
+############################
+# Testing
+############################
+**/coverage/
+**/*.lcov
+
+############################
+# Misc
+############################
+**/*.lock
+**/*.pid
+
+
+
+
+Crear una nueva pan7talla en React Native (Expo) que calcule el total a pagar aplicando recargos y descuentos según condiciones del usuario.
+📥 Entradas
+La pantalla debe incluir:
+Monto base (input numérico)
+Meses de atraso (input numérico)
+Cliente frecuente (Switch)
+Método de pago (Select con Picker):
+Efectivo
+Tarjeta
+Transferencia
+📐 Reglas de negocio
+Recargo por mora:
+2% del monto base por cada mes de atraso
+Descuento por cliente frecuente:
+10% del monto base
+Ajuste por método de pago:
+Tarjeta → +3%
+Transferencia → −2%
+Efectivo → 0%
+Total:
+total = montoBase + recargo + ajusteMetodo - descuento
+📊 Resultados a mostrar
+Subtotal
+Recargo
+Descuento
+Ajuste por método
+Total final
+Los valores deben actualizarse en tiempo real.
+🛠 Requisitos técnicos
+useState para inputs
+useMemo para cálculos
+TextInput, Switch y Picker
+Navegación desde el menú principal (Expo Router)
+
+
+
+npm install @react-native-picker/picker
+
+o (recomendado con Expo):
+npx expo install @react-native-picker/picker
+
+
+
+sudo fallocate -l 5G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+
