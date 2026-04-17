@@ -1,0 +1,33 @@
+fun main() {
+    println("Set")
+    println("Inmutables")
+    val numeros=setOf(1,2,3,4,5,4,4,3,2,1)
+    println(numeros)
+    println("Operaciones de Conjuntos")
+    
+    val pares=setOf(2,4,6,8,10)
+    println("pares $pares")
+    
+    val impares=setOf(1,3,6,7,9)
+    val multiplos3=setOf(3,6,9,12)
+    println("pares $impares")
+    println("union ${impares union pares}")
+    println("interaccion ${impares intersect pares}")
+    println("interaccion ${multiplos3 intersect pares}")
+    println("subsinteraccion ${impares subtract pares}")
+    println("pares $pares")
+    println("impares $impares")
+    
+    println("Set")
+    println("mutables")
+    val lenguajes=mutableSetOf("kotlin", "java", "reactactive")
+    println(lenguajes)
+    lenguajes.add("kotlin")
+    println(lenguajes)
+    lenguajes.add("javascript")
+    println(lenguajes)
+    lenguajes.remove("java")
+    println(lenguajes)
+    println("Verificar si un valor existe ${"kotlin" in lenguajes}")
+    println("Verificar si un valor existe ${"java" in lenguajes}")
+}
