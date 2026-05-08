@@ -135,6 +135,38 @@ fun Paso02_UiStateScreen(vm: ProductosUiStateViewModel = viewModel()) {
     }
 }
 
+@Composable
+fun TarjetaProductoSimple(producto: com.ute.compose.model.Producto) {
+    ElevatedCard(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier          = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text  = producto.nombre,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                Text(
+                    text  = "${producto.precio} $",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+            Badge(
+                containerColor = if (producto.stock > 0) 
+                    MaterialTheme.colorScheme.primaryContainer 
+                else 
+                    MaterialTheme.colorScheme.errorContainer
+            ) {
+                Text("Stock: ${producto.stock}")
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun Paso02Preview() {
