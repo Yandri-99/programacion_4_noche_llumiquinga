@@ -1,3 +1,4 @@
+
 // NavGraph.kt — dentro de @Composable NavGraph()
 // presentation/navigation/NavGraph.kt
 package com.shopapp.presentation.navigation
@@ -24,6 +25,9 @@ import com.shopapp.presentation.ui.uipublic.catalog.CatalogScreen
 import com.shopapp.presentation.ui.uipublic.home.HomeScreen
 import com.shopapp.presentation.ui.uipublic.product.ProductDetailScreen
 import com.shopapp.presentation.ui.uipublic.cart.CartBottomSheet
+import com.shopapp.presentation.ui.client.orders.OrdersScreen
+import com.shopapp.presentation.ui.client.orders.OrderDetailScreen
+import com.shopapp.presentation.ui.client.profile.ProfileScreen
 import com.shopapp.presentation.viewmodel.AuthViewModel
 import com.shopapp.presentation.viewmodel.CartViewModel
 import com.shopapp.theme.Surface
@@ -158,40 +162,43 @@ fun NavGraph(
             // ── PEDIDOS ────────────────────────────
             composable(Screen.Orders.route) {
                 if (!isAuthenticated) {
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Home.route)
+                    LaunchedEffect(Unit) {
+                        navController.navigate(Screen.Login.route) { popUpTo(Screen.Home.route) }
                     }
                 } else {
-                    ScreenWithLogout(
-                        title = "Mis pedidos — M6",
-                        onLogout = {
-                            authViewModel.logout()
-                            navController.navigate(Screen.Login.route) {
-                                popUpTo(0) { inclusive = true }
-                            }
-                        }
+                    OrdersScreen(
+                        onOrderClick = { id -> navController.navigate("orders/$id") },
                     )
                 }
+            }
+
+            // ── DETALLE PEDIDO ─────────────────────
+            composable(
+                route     = Screen.OrderDetail().route,
+                arguments = listOf(navArgument("id") { type = NavType.IntType }),
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getInt("id") ?: return@composable
+                OrderDetailScreen(
+                    orderId = id,
+                    onBack  = { navController.popBackStack() },
+                )
             }
 
             // ── PERFIL ─────────────────────────────
             composable(Screen.Profile.route) {
                 if (!isAuthenticated) {
-                    navController.navigate(Screen.Login.route) {
-                        popUpTo(Screen.Home.route)
+                    LaunchedEffect(Unit) {
+                        navController.navigate(Screen.Login.route) { popUpTo(Screen.Home.route) }
                     }
                 } else {
-                    ScreenWithLogout(
-                        title = "Mi perfil — M6",
-                        onLogout = {
-                            authViewModel.logout()
+                    ProfileScreen(
+                        authViewModel = authViewModel,
+                        onLogout      = {
                             navController.navigate(Screen.Login.route) {
                                 popUpTo(0) { inclusive = true }
                             }
-                        }
-                    ) {
-                        LoadingScreen("Mi perfil — M6")
-                    }
+                        },
+                    )
                 }
             }
 
@@ -247,4 +254,6 @@ fun ScreenWithLogout(
         }
     }
 }
+
+
 
