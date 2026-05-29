@@ -23,9 +23,17 @@ data class CategoryRequestDto(
 )
 
 data class CategoryStatsDto(
-    val total:    Int,
-    val active:   Int,
+    val total: Int,
+    val active: Int,
     val inactive: Int,
+    val detail: List<CategoryDetailDto>
+)
+
+data class CategoryDetailDto(
+    val id: Int,
+    val name: String,
+    val num_products: Int,
+    val is_active: Boolean
 )
 
 // ── Mappers ───────────────────────────────────────────────────

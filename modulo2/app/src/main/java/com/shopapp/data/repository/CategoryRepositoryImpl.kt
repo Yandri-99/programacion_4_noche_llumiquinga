@@ -45,6 +45,24 @@ class CategoryRepositoryImpl @Inject constructor(
 
     override suspend fun deleteCategory(id: Int): Result<Unit> = runCatching {
         val response = api.deleteCategory(id)
-        if (!response.isSuccessful) error("Error ${response.code()}")
+        if (!response.isSuccessful) {
+            error("Error ${response.code()}: ${response.errorBody()?.string()}")
+        }
+    }
+
+    override suspend fun getStats(): Result<Map<String, Any>> = runCatching {
+        val response = api.getStats()
+        if (response.isSuccessful) {
+            val s = response.body()!!
+
+            mapOf(
+                "total"    to s.total,
+                "active"   to s.active,
+                "inactive" to s.inactive,
+                "detail"   to s.detail // lista de categorías con num_products
+            )
+        } else {
+            error("Error ${response.code()}: ${response.errorBody()?.string()}")
+        }
     }
 }

@@ -1,9 +1,9 @@
-
 // NavGraph.kt — dentro de @Composable NavGraph()
 // presentation/navigation/NavGraph.kt
 package com.shopapp.presentation.navigation
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +19,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import com.shopapp.presentation.components.LoadingScreen
+import com.shopapp.presentation.ui.admin.AdminScaffold
+import com.shopapp.presentation.ui.admin.dashboard.DashboardScreen
 import com.shopapp.presentation.ui.auth.LoginScreen
 import com.shopapp.presentation.ui.auth.RegisterScreen
 import com.shopapp.presentation.ui.uipublic.catalog.CatalogScreen
@@ -31,6 +33,7 @@ import com.shopapp.presentation.ui.client.profile.ProfileScreen
 import com.shopapp.presentation.viewmodel.AuthViewModel
 import com.shopapp.presentation.viewmodel.CartViewModel
 import com.shopapp.theme.Surface
+import com.shopapp.theme.TextSecondary
 
 @Composable
 fun NavGraph(
@@ -205,19 +208,62 @@ fun NavGraph(
             // ── ADMIN ──────────────────────────────
             composable(Screen.AdminDashboard.route) {
                 if (!isStaff) {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(0)
-                    }
-                } else {
-                    ScreenWithLogout(
-                        title = "Admin Dashboard — M8",
-                        onLogout = {
-                            authViewModel.logout()
-                            navController.navigate(Screen.Login.route) {
-                                popUpTo(0) { inclusive = true }
-                            }
+                    LaunchedEffect(Unit) { navController.navigate(Screen.Home.route) { popUpTo(0) } }
+                    return@composable
+                }
+                AdminScaffold(
+                    currentRoute = Screen.AdminDashboard.route,
+                    user         = authViewModel.currentUser.collectAsState().value,
+                    title        = "Dashboard",
+                    onNavClick   = { route -> navController.navigate(route) {
+                        launchSingleTop = true
+                        restoreState    = true
+                    }},
+                    onStoreClick = {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.AdminDashboard.route) { inclusive = false }
                         }
-                    )
+                    },
+                    onLogout     = {
+                        authViewModel.logout()
+                        navController.navigate(Screen.Login.route) { popUpTo(0) { inclusive = true } }
+                    },
+                ) { padding ->
+                    Box(modifier = Modifier.padding(padding)) {
+                        DashboardScreen(onNavigate = { route -> navController.navigate(route) })
+                    }
+                }
+            }
+            // Placeholders para M8-M12 — misma estructura con AdminScaffold
+            listOf(
+                "admin/categories" to "Categorías",
+                "admin/products"   to "Productos",
+                "admin/orders"     to "Pedidos",
+                "admin/users"      to "Usuarios",
+            ).forEach { (route, title) ->
+                composable(route) {
+                    if (!isStaff) {
+                        LaunchedEffect(Unit) { navController.navigate(Screen.Home.route) { popUpTo(0) } }
+                        return@composable
+                    }
+                    AdminScaffold(
+                        currentRoute = route,
+                        user         = authViewModel.currentUser.collectAsState().value,
+                        title        = title,
+                        onNavClick   = { r -> navController.navigate(r) { launchSingleTop = true } },
+                        onStoreClick = { navController.navigate(Screen.Home.route) },
+                        onLogout     = {
+                            authViewModel.logout()
+                            navController.navigate(Screen.Login.route) { popUpTo(0) { inclusive = true } }
+                        },
+                    ) { padding ->
+                        Box(
+                            modifier         = Modifier.fillMaxSize().padding(padding),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text("$title — próximo módulo", color = TextSecondary)
+                        }
+                    }
                 }
             }
         }
@@ -254,6 +300,5 @@ fun ScreenWithLogout(
         }
     }
 }
-
 
 
