@@ -1,10 +1,8 @@
 // di/RepositoryModule.kt
 package com.shopapp.di
 
-import com.shopapp.data.repository.AuthRepositoryImpl
-import com.shopapp.data.repository.CategoryRepositoryImpl
-import com.shopapp.domain.repository.AuthRepository
-import com.shopapp.domain.repository.CategoryRepository
+import com.shopapp.data.repository.*
+import com.shopapp.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,4 +18,7 @@ abstract class RepositoryModule {
 
     @Binds @Singleton
     abstract fun bindCategoryRepository(impl: CategoryRepositoryImpl): CategoryRepository
+
+    @Binds @Singleton
+    abstract fun bindProductRepository(impl: ProductRepositoryImpl): ProductRepository
 }
