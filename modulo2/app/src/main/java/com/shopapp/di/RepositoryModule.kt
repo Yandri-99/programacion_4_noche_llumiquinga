@@ -21,4 +21,8 @@ abstract class RepositoryModule {
 
     @Binds @Singleton
     abstract fun bindProductRepository(impl: ProductRepositoryImpl): ProductRepository
+
+    // di/RepositoryModule.kt — agregar binding
+    @Binds @Singleton
+    abstract fun bindOrderRepository(impl: OrderRepositoryImpl): OrderRepository
 }
