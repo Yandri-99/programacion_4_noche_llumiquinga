@@ -16,7 +16,9 @@ int obtenerCapacidad() {
 
 int calcularPasajeros(int a, int b) => a * b;
 
-void saludarOpcional(String nombre, [String apellido = 'Sin Apellido'])
+void saludarOpcional(String nombre, [String apellido = 'Sin Apellido']) {
+  print('Hola $nombre $apellido');
+}
 
 void registroConductor({
   required String nombre,
@@ -26,8 +28,6 @@ void registroConductor({
 }
 
 String formatearTarifa(double tarifa) => '\$${tarifa.toStringAsFixed(2)}';
-
-String formatearTarifaSinTipo(double tarifa) => '\$${tarifa.toStringAsFixed(2)}';
 
 void main() {
   anunciarRuta();
@@ -44,5 +44,4 @@ void main() {
     edad: 30,
   );
   print(formatearTarifa(0.50));
-  print(formatearTarifaSinTipo(0.50));
 }

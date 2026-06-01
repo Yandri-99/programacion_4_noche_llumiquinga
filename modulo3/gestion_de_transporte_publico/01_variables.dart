@@ -1,8 +1,8 @@
 void main() {
-  var conductor = 'Carlos';           // String
-  var edad      = 35;                 // int
-  var tarifa    = 0.50;               // double
-  var rutaActiva = true;              // bool
+  var conductor = 'Carlos';
+  var edad      = 35;
+  var tarifa    = 0.50;
+  var rutaActiva = true;
 
   String apellido = 'Mendoza';
   int    capacidadBus = 60;
@@ -18,17 +18,15 @@ void main() {
   final horaActual = DateTime.now();
 
   print('$conductor $apellido conduce la $linea en $ciudad');
-}
 
-var contadorPasajeros = 0;
-contadorPasajeros = 15;
+  var contadorPasajeros = 0;
+  contadorPasajeros = 15;
 
-final paradas = ['La Marín', 'El Recreo', 'Quitumbe'];
-paradas.add('El Labrador');
+  final paradas = ['La Marín', 'El Recreo', 'Quitumbe'];
+  paradas.add('El Labrador');
 
-const tiposBus = ['alimentador', 'troncal', 'interparroquial'];
+  print(paradas);
 
-void main() {
   String nombre = 'Estación Norte';
 
   String? paradero = null;
@@ -41,8 +39,6 @@ void main() {
   String resultado = estacion ?? 'Sin estación asignada';
   print(resultado);
 
-  String estacionSegura = estacion!;
-
   if (paradero != null) {
     print(paradero.length);
   }
@@ -50,9 +46,7 @@ void main() {
   late String codigoRuta;
   codigoRuta = 'RUTA-001';
   print(codigoRuta);
-}
 
-void main() {
   List<String> rutas = ['Trolebús', 'Metrobús', 'Ecovía'];
   var numerosRuta = [1, 2, 3, 4, 5];
 
@@ -86,6 +80,7 @@ void main() {
     'Parada 2',
     if (tieneDesvio) 'Parada Alterna',
   ];
+  print(paraderos);
 
   var cuadrantes = [for (var i = 1; i <= 5; i++) 'Zona $i'];
   print(cuadrantes);

@@ -17,7 +17,7 @@ void main() {
   Object obj = 'Quitumbe';
   String str = obj as String;
 
-  int? recorrido = null;
+  String? recorrido = null;
   int km = recorrido?.length ?? 0;
   print(km);
 
