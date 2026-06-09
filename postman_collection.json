@@ -1,0 +1,418 @@
+{
+	"info": {
+		"name": "TransportApp API",
+		"description": "API de Gestión de Transporte Público",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"admin@transportapp.com\", \"password\": \"admin123\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/auth/login/"
+					}
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"nuevo@test.com\", \"nombre\": \"Nuevo\", \"password\": \"pass12345\", \"password2\": \"pass12345\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/auth/register/"
+					}
+				},
+				{
+					"name": "Token Refresh",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"refresh\": \"eyJ...\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/auth/token/refresh/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Routes",
+			"item": [
+				{
+					"name": "List Routes",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/routes/"
+					}
+				},
+				{
+					"name": "Create Route",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Ruta Norte\", \"origin\": \"Quito\", \"destination\": \"Otavalo\", \"tarifa\": \"5.50\", \"description\": \"Ruta turística\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/routes/"
+					}
+				},
+				{
+					"name": "Route Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/routes/1/"
+					}
+				},
+				{
+					"name": "Update Route",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Ruta Norte Edit\", \"origin\": \"Quito\", \"destination\": \"Otavalo\", \"tarifa\": \"6.00\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/routes/1/"
+					}
+				},
+				{
+					"name": "Delete Route",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/routes/1/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "List Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/vehicles/"
+					}
+				},
+				{
+					"name": "Create Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Bus 3\", \"placa\": \"ABC-999\", \"tipo\": \"Bus\", \"capacidad\": 40, \"precio_pasaje\": \"30.00\", \"estado\": \"Activo\", \"description\": \"Bus nuevo\", \"route_id\": 1}"
+						},
+						"url": "http://127.0.0.1:8000/api/vehicles/"
+					}
+				},
+				{
+					"name": "Vehicle Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/vehicles/5/"
+					}
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Bus 1 Edit\", \"placa\": \"PCH-1234\", \"tipo\": \"Bus\", \"capacidad\": 45, \"precio_pasaje\": \"25.00\", \"estado\": \"Activo\", \"route_id\": 1}"
+						},
+						"url": "http://127.0.0.1:8000/api/vehicles/5/"
+					}
+				},
+				{
+					"name": "Delete Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/vehicles/5/"
+					}
+				},
+				{
+					"name": "Vehicle Stats",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/vehicles/stats/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Drivers",
+			"item": [
+				{
+					"name": "List Drivers",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/drivers/"
+					}
+				},
+				{
+					"name": "Create Driver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"conductor3@test.com\", \"nombre\": \"Conductor 3\", \"password\": \"pass12345\", \"password2\": \"pass12345\", \"licencia\": \"LIC-999\", \"telefono\": \"0999999999\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/drivers/"
+					}
+				},
+				{
+					"name": "Driver Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/drivers/3/"
+					}
+				},
+				{
+					"name": "Toggle Active",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/drivers/3/toggle_active/"
+					}
+				},
+				{
+					"name": "Driver Stats",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/drivers/stats/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Trips",
+			"item": [
+				{
+					"name": "List Trips",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/trips/"
+					}
+				},
+				{
+					"name": "Create Trip",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"origin\": \"Quito\", \"destination\": \"Guayaquil\", \"pasajeros\": 3, \"total\": \"75.00\", \"route_id\": 1, \"vehicle_id\": 5}"
+						},
+						"url": "http://127.0.0.1:8000/api/trips/"
+					}
+				},
+				{
+					"name": "Trip Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/trips/1/"
+					}
+				},
+				{
+					"name": "Update Trip Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"status\": \"en_curso\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/trips/1/"
+					}
+				},
+				{
+					"name": "Delete Trip",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/trips/1/"
+					}
+				},
+				{
+					"name": "Trip Stats",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/trips/stats/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Schedules",
+			"item": [
+				{
+					"name": "List Schedules",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/schedules/"
+					}
+				},
+				{
+					"name": "Create Schedule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"route\": 1, \"vehicle\": 5, \"driver\": 3, \"hora_salida\": \"08:00\", \"hora_llegada\": \"12:00\", \"dia_semana\": \"LUNES\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/schedules/"
+					}
+				},
+				{
+					"name": "Schedule Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/schedules/1/"
+					}
+				},
+				{
+					"name": "Delete Schedule",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/schedules/1/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Maintenance",
+			"item": [
+				{
+					"name": "List Maintenance",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/maintenance/"
+					}
+				},
+				{
+					"name": "Create Maintenance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"vehicle\": 5, \"tipo\": \"PREVENTIVO\", \"descripcion\": \"Cambio de aceite\", \"costo\": \"120.50\", \"fecha\": \"2026-06-06\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/maintenance/"
+					}
+				},
+				{
+					"name": "Maintenance Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/maintenance/1/"
+					}
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "List Payments",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/payments/"
+					}
+				},
+				{
+					"name": "Create Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"trip\": 1, \"monto\": \"75.00\", \"metodo_pago\": \"EFECTIVO\"}"
+						},
+						"url": "http://127.0.0.1:8000/api/payments/"
+					}
+				},
+				{
+					"name": "Payment Detail",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+						"url": "http://127.0.0.1:8000/api/payments/1/"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJ...",
+			"type": "string"
+		}
+	]
+}
