@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -66,4 +68,13 @@ dependencies {
 
     // Coil para mostrar imágenes
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    // Ubicación
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation(libs.kotlinx.coroutines.play.services)
+
+    // Google Maps Compose (para visualizar la ubicación)
+    implementation("com.google.maps.android:maps-compose:6.2.0")
+
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 }
