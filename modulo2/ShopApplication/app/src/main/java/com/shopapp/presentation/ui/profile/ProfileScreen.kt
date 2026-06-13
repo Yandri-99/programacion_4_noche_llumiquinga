@@ -2,12 +2,15 @@
 package com.shopapp.presentation.ui.client.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,8 +23,9 @@ import com.shopapp.theme.*
 
 @Composable
 fun ProfileScreen(
-    authViewModel: AuthViewModel,
-    onLogout:      () -> Unit,
+    authViewModel:     AuthViewModel,
+    onLogout:          () -> Unit,
+    onSendNotification: () -> Unit = {},
 ) {
     val user by authViewModel.currentUser.collectAsState()
 
@@ -128,6 +132,40 @@ fun ProfileScreen(
                     }
                     if (i < 3) HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                 }
+            }
+        }
+
+        // ── Opción de staff: enviar notificación (13.14) ──────
+        if (user?.isStaff == true) {
+            Spacer(Modifier.height(24.dp))
+
+            Surface(
+                color    = Surface,
+                shape    = MaterialTheme.shapes.large,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                ListItem(
+                    headlineContent   = {
+                        Text("Enviar notificación", fontWeight = FontWeight.Medium)
+                    },
+                    supportingContent = {
+                        Text("Envía un correo a uno o todos los usuarios")
+                    },
+                    leadingContent    = {
+                        Icon(
+                            imageVector        = Icons.Default.Send,
+                            contentDescription = null,
+                            tint               = Accent,
+                        )
+                    },
+                    trailingContent   = {
+                        Icon(
+                            imageVector        = Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = null,
+                        )
+                    },
+                    modifier = Modifier.clickable(onClick = onSendNotification),
+                )
             }
         }
 
