@@ -4,6 +4,7 @@ import 'screens/pantalla_tema.dart';
 import 'screens/pantalla_appbar.dart';
 import 'widgets/catalogo_botones.dart';
 import 'screens/pantalla_navegacion.dart';
+import 'screens/pantalla_dialogs.dart';
 // ┌──────────────────────────────────────────────────────────────────┐
 // │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos. │
 // │  1  Paso 1  ThemeData + Scaffold básico                         │
@@ -52,6 +53,7 @@ class _AppMonitoreoState extends State<AppMonitoreo> {
      3 => const PantallaAppBar(),
      4 => const CatalogoBotones(),
      5 => const PantallaNavegacion(),
+     6 => const PantallaDialogs(),
         _ => Scaffold(
             body: Center(child: Text('Paso $paso: crea el widget primero'))),
       },
