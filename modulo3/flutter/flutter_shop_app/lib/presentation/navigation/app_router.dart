@@ -9,6 +9,8 @@ import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/catalog/catalog_screen.dart';
 import '../screens/catalog/home_screen.dart';
+import '../screens/catalog/product_detail_screen.dart';
+import '../screens/cart/cart_screen.dart';
 import 'public_shell.dart';
 
 class _PlaceholderScreen extends ConsumerWidget {
@@ -68,15 +70,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(path: '/',        builder: (_, __) => const HomeScreen()),
           GoRoute(path: '/catalog', builder: (_, __) => const CatalogScreen()),
-          GoRoute(
-            path:    '/product/:id',
-            builder: (_, s) => _PlaceholderScreen('Detalle #${s.pathParameters['id']} — M5'),
-          ),
-          GoRoute(path: '/cart',    builder: (_, __) => const _PlaceholderScreen('Carrito — M5')),
+          GoRoute(path: '/cart',    builder: (_, __) => const CartScreen()),
           GoRoute(path: '/orders',  builder: (_, __) => const _PlaceholderScreen('Mis pedidos — M6')),
           GoRoute(path: '/orders/:id', builder: (_, s) => _PlaceholderScreen('Pedido #${s.pathParameters['id']} — M6')),
           GoRoute(path: '/profile', builder: (_, __) => const _PlaceholderScreen('Perfil — M6')),
         ],
+      ),
+
+      // ── Detalle de producto (fuera del ShellRoute — sin BottomNavBar) ──
+      GoRoute(
+        path: '/catalog/:id',
+        builder: (_, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return ProductDetailScreen(productId: id);
+        },
       ),
 
       // ── Admin ─────────────────────────────────────────────
