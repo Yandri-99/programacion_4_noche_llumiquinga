@@ -104,6 +104,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
     final isSaving = formSt is CategoryFormSaving;
     final isEdit   = widget.initial != null;
 
+    // Cerrar si guardó con éxito
     if (formSt is CategoryFormSuccess) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) Navigator.pop(context);
@@ -120,6 +121,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Drag handle
             Center(
               child: Container(
                 width:  40, height: 4,
@@ -132,13 +134,14 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
             ),
 
             Text(
-              isEdit ? 'Editar: ${widget.initial!.name}' : 'Nueva categor\u00EDa',
+              isEdit ? 'Editar: ${widget.initial!.name}' : 'Nueva categoría',
               style: const TextStyle(
                 color: AppColors.textPrimary, fontSize: 20, fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 20),
 
+            // Error del formulario
             if (formSt is CategoryFormError) ...[
               Container(
                 width:   double.infinity,
@@ -148,7 +151,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  (formSt as CategoryFormError).message,
+                  formSt.message,
                   style: const TextStyle(color: AppColors.error, fontSize: 13),
                 ),
               ),
@@ -160,6 +163,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Nombre
                   TextFormField(
                     controller:  _nameCtrl,
                     enabled:     !isSaving,
@@ -169,6 +173,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
                   ),
                   const SizedBox(height: 14),
 
+                  // Slug
                   TextFormField(
                     controller:  _slugCtrl,
                     enabled:     !isSaving,
@@ -183,25 +188,27 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
                     validator:   (v) {
                       if (v == null || v.trim().isEmpty) return 'Slug es obligatorio';
                       if (!RegExp(r'^[a-z0-9-]+$').hasMatch(v.trim())) {
-                        return 'Solo min\u00FAsculas, n\u00FAmeros y guiones';
+                        return 'Solo minúsculas, números y guiones';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 14),
 
+                  // Descripción
                   TextFormField(
                     controller: _descCtrl,
                     enabled:    !isSaving,
                     maxLines:   3,
                     decoration: const InputDecoration(
-                      labelText: 'Descripci\u00F3n',
+                      labelText: 'Descripción',
                       alignLabelWithHint: true,
                     ),
                     style: const TextStyle(color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 14),
 
+                  // Toggle activa
                   Container(
                     padding:    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     decoration: BoxDecoration(
@@ -214,12 +221,12 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Categor\u00EDa activa',
+                            const Text('Categoría activa',
                                 style: TextStyle(
                                   color:      AppColors.textPrimary,
                                   fontWeight: FontWeight.w600,
                                 )),
-                            const Text('Visible en el cat\u00E1logo p\u00FAblico',
+                            const Text('Visible en el catálogo público',
                                 style: TextStyle(
                                   color: AppColors.textSecondary, fontSize: 12,
                                 )),
@@ -240,6 +247,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
                   ),
                   const SizedBox(height: 20),
 
+                  // Botones
                   Row(
                     children: [
                       Expanded(
@@ -259,7 +267,7 @@ class _CategoryFormSheetState extends ConsumerState<CategoryFormSheet> {
                                     strokeWidth: 2.5, color: AppColors.onAccent,
                                   ),
                                 )
-                              : Text(isEdit ? 'Guardar cambios' : 'Crear categor\u00EDa'),
+                              : Text(isEdit ? 'Guardar cambios' : 'Crear categoría'),
                         ),
                       ),
                     ],

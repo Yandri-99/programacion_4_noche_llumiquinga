@@ -49,7 +49,6 @@ class _CategoriesAdminScreenState extends ConsumerState<CategoriesAdminScreen> {
 
     return Column(
       children: [
-        // ── Header ──────────────────────────────────────────
         Container(
           color: AppColors.surface,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -61,14 +60,14 @@ class _CategoriesAdminScreenState extends ConsumerState<CategoriesAdminScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Categor\u00EDas',
+                      const Text('Categorías',
                           style: TextStyle(
                             color: AppColors.textPrimary,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           )),
                       Text(
-                        '${state.categories.length} categor\u00EDas',
+                        '${state.categories.length} categorías',
                         style: const TextStyle(
                             color: AppColors.textSecondary, fontSize: 13),
                       ),
@@ -90,7 +89,7 @@ class _CategoriesAdminScreenState extends ConsumerState<CategoriesAdminScreen> {
               TextField(
                 onChanged: ref.read(categoriesAdminProvider.notifier).setSearch,
                 decoration: const InputDecoration(
-                  hintText: 'Buscar categor\u00EDa...',
+                  hintText: 'Buscar categoría...',
                   prefixIcon: Icon(Icons.search_rounded,
                       color: AppColors.textSecondary),
                   contentPadding: EdgeInsets.symmetric(vertical: 10),
@@ -101,8 +100,6 @@ class _CategoriesAdminScreenState extends ConsumerState<CategoriesAdminScreen> {
             ],
           ),
         ),
-
-        // ── Contenido ──────────────────────────────────────
         Expanded(
           child: Builder(builder: (_) {
             if (state.isLoading) {
@@ -132,12 +129,11 @@ class _CategoriesAdminScreenState extends ConsumerState<CategoriesAdminScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('\uD83C\uDFF7\uFE0F',
-                        style: TextStyle(fontSize: 48)),
+                    const Text('🏷️', style: TextStyle(fontSize: 48)),
                     const SizedBox(height: 12),
                     Text(
                       state.search.isEmpty
-                          ? 'Sin categor\u00EDas'
+                          ? 'Sin categorías'
                           : 'Sin resultados',
                       style: const TextStyle(
                         color: AppColors.textPrimary,
@@ -190,15 +186,13 @@ class _CategoriesAdminScreenState extends ConsumerState<CategoriesAdminScreen> {
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          hasProducts
-              ? '\u00BFDesactivar categor\u00EDa?'
-              : '\u00BFEliminar categor\u00EDa?',
+          hasProducts ? '¿Desactivar categoría?' : '¿Eliminar categoría?',
           style: const TextStyle(color: AppColors.textPrimary),
         ),
         content: Text(
           hasProducts
-              ? '"${cat.name}" tiene ${cat.totalProducts} producto(s). Se desactivar\u00E1 en lugar de eliminarse.'
-              : '"${cat.name}" se eliminar\u00E1 permanentemente.',
+              ? '"${cat.name}" tiene ${cat.totalProducts} producto(s). Se desactivará en lugar de eliminarse.'
+              : '"${cat.name}" se eliminará permanentemente.',
           style: const TextStyle(color: AppColors.textSecondary),
         ),
         actions: [
@@ -258,6 +252,7 @@ class _CategoryCard extends StatelessWidget {
           ),
           child: Row(
             children: [
+              // Toggle
               Switch(
                 value: category.isActive,
                 onChanged: (_) => onToggle(),
@@ -268,6 +263,8 @@ class _CategoryCard extends StatelessWidget {
                       : AppColors.border,
                 ),
               ),
+
+              // Info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -324,6 +321,8 @@ class _CategoryCard extends StatelessWidget {
                   ],
                 ),
               ),
+
+              // Acciones
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

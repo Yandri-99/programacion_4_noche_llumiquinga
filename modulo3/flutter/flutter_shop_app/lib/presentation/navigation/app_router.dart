@@ -17,36 +17,9 @@ import '../screens/auth/profile_screen.dart';
 import '../screens/admin/dashboard_screen.dart';
 import '../screens/admin/categories_admin_screen.dart';
 import '../screens/admin/products_admin_screen.dart';
+import '../screens/admin/users_admin_screen.dart';
 import '../widgets/admin_shell.dart';
 import 'public_shell.dart';
-
-class _PlaceholderScreen extends ConsumerWidget {
-  final String title;
-  const _PlaceholderScreen(this.title);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        actions: [
-          IconButton(
-            tooltip: 'Cerrar sesión',
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              // Cerrar sesión y volver al login
-              await ref.read(authProvider.notifier).logout();
-              context.go('/login');
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text(title, style: const TextStyle(color: Color(0xFF8888AA), fontSize: 16)),
-      ),
-    );
-  }
-}
 
 class _AdminPlaceholder extends StatelessWidget {
   final String title;
@@ -64,31 +37,34 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     refreshListenable: _AuthStateListenable(ref),
     redirect: (context, state) {
-      final auth     = ref.read(authProvider);
+      final auth = ref.read(authProvider);
       final location = state.matchedLocation;
 
-      if (auth.isChecking)        return null;
+      if (auth.isChecking) return null;
 
       final isAuthRoute = location == '/login' || location == '/register';
 
       if (!auth.isAuthenticated && !isAuthRoute) return '/login';
-      if ( auth.isAuthenticated &&  isAuthRoute) return auth.isStaff ? '/admin' : '/';
-      if ( auth.isAuthenticated && !auth.isStaff && location.startsWith('/admin')) return '/';
+      if (auth.isAuthenticated && isAuthRoute)
+        return auth.isStaff ? '/admin' : '/';
+      if (auth.isAuthenticated &&
+          !auth.isStaff &&
+          location.startsWith('/admin')) return '/';
 
       return null;
     },
     routes: [
       // ── Auth ──────────────────────────────────────────────
-      GoRoute(path: '/login',    builder: (_, __) => const LoginScreen()),
+      GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
       GoRoute(path: '/register', builder: (_, __) => const RegisterScreen()),
 
       // ── Zona pública con BottomNavBar ──────────────────────
       ShellRoute(
         builder: (_, __, child) => PublicShell(child: child),
         routes: [
-          GoRoute(path: '/',        builder: (_, __) => const HomeScreen()),
+          GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
           GoRoute(path: '/catalog', builder: (_, __) => const CatalogScreen()),
-          GoRoute(path: '/cart',    builder: (_, __) => const CartScreen()),
+          GoRoute(path: '/cart', builder: (_, __) => const CartScreen()),
           GoRoute(path: '/orders', builder: (_, __) => const OrdersScreen()),
           GoRoute(
             path: '/orders/:id',
@@ -113,49 +89,50 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/admin',
         builder: (_, state) => AdminShell(
-          title:        'Dashboard',
+          title: 'Dashboard',
           currentRoute: state.matchedLocation,
-          child:        const DashboardScreen(),
+          child: const DashboardScreen(),
         ),
       ),
       GoRoute(
         path: '/admin/categories',
         builder: (_, state) => AdminShell(
-          title:        'Categor\u00EDas',
+          title: 'Categor\u00EDas',
           currentRoute: state.matchedLocation,
-          child:        const CategoriesAdminScreen(),
+          child: const CategoriesAdminScreen(),
         ),
       ),
       GoRoute(
         path: '/admin/products',
         builder: (_, state) => AdminShell(
-          title:        'Productos',
+          title: 'Productos',
           currentRoute: state.matchedLocation,
-          child:        const ProductsAdminScreen(),
+          child: const ProductsAdminScreen(),
         ),
       ),
       GoRoute(
         path: '/admin/orders',
         builder: (_, state) => AdminShell(
-          title:        'Pedidos',
+          title: 'Pedidos',
           currentRoute: state.matchedLocation,
-          child:        const _AdminPlaceholder('Pedidos admin \u2014 M11'),
+          child: const _AdminPlaceholder('Pedidos admin \u2014 M11'),
         ),
       ),
       GoRoute(
         path: '/admin/orders/:id',
         builder: (_, state) => AdminShell(
-          title:        'Detalle pedido',
+          title: 'Detalle pedido',
           currentRoute: '/admin/orders',
-          child:        _AdminPlaceholder('Pedido #${state.pathParameters['id']} \u2014 M11'),
+          child: _AdminPlaceholder(
+              'Pedido #${state.pathParameters['id']} \u2014 M11'),
         ),
       ),
       GoRoute(
         path: '/admin/users',
         builder: (_, state) => AdminShell(
-          title:        'Usuarios',
+          title: 'Usuarios',
           currentRoute: state.matchedLocation,
-          child:        const _AdminPlaceholder('Usuarios \u2014 M12'),
+          child: const UsersAdminScreen(),
         ),
       ),
     ],
