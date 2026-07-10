@@ -1,7 +1,7 @@
 // lib/presentation/providers/categories_admin_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/remote/api/category_remote_datasource.dart';
+import '../../data/remote/api/categoryremotedatasource.dart';
 import '../../domain/model/category.dart';
 
 class CategoriesAdminState {

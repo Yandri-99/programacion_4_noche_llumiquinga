@@ -25,7 +25,9 @@ dependencies:
   flutter_secure_storage: ^9.2.2
 
   # ── Imágenes ─────────────────────────────────────────────
-  cached_network_image: ^3.4.1
+  cached_network_image: ^3.4.1  # Caché de imágenes de red con placeholder
+  image_picker: ^1.2.2          # Seleccionar imagen de galería / cámara
+  http: ^1.6.0
 
   # ── Modelos / serialización ───────────────────────────────
   freezed_annotation: ^2.4.4
