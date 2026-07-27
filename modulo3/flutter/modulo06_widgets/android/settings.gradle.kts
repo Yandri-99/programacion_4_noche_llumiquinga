@@ -1,0 +1,29 @@
+pluginManagement {
+    val flutterSdkPath =
+        run {
+            val properties = java.util.Properties()
+            file("local.properties").inputStream().use { properties.load(it) }
+            val flutterSdkPath = properties.getProperty("flutter.sdk")
+            require(flutterSdkPath != null) { "flutter.sdk not set in local.properties" }
+            flutterSdkPath
+        }
+
+    // TRUCO PARA EL LAB: Forzamos a las herramientas de Flutter a usar /tmp para compilar plugins
+    System.setProperty("org.gradle.project.buildDir", "/tmp/flutter_build_cache")
+
+    includeBuild("/tmp/flutter_gradle_build")
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id("dev.flutter.flutter-plugin-loader") version "1.0.0"
+    id("com.android.application") version "8.3.0" apply false // Bajamos esto para que coincida con tu Gradle 8.3
+    id("org.jetbrains.kotlin.android") version "1.9.20" apply false
+}
+
+include(":app")
